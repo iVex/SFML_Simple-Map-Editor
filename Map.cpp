@@ -17,7 +17,7 @@ Map::~Map()
 
 void Map::createMap(int x, int y, int size)
 {
-	tileset.setTileset("assets/tileset2.png", size);
+	tileset.setTileset("assets/tileset.png", size);
 	sizeX = x;
 	sizeY = y;
 	tileSize = size;
@@ -131,6 +131,17 @@ void Map::import(std::string content)
 			std::getline(ss, word, ',');
 			_map[i][n] = std::stoi(word);
 			std::cout << "[" << i << "][" << n << "]: " << std::stoi(word) << std::endl;
+		}
+	}
+}
+
+void Map::clear()
+{
+	for (int i = 0; i < _map.size(); i++)
+	{
+		for (int n = 0; n < _map[i].size(); n++)
+		{
+			_map[i][n] = 0;
 		}
 	}
 }

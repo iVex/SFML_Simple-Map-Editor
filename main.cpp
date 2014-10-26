@@ -5,8 +5,12 @@
 #include "Map.h"
 #include "Commands.h"
 
-sf::RenderWindow App(sf::VideoMode(640, 640), "Editor");
-Map map(20, 20, 32);
+const int mapX = 25;
+const int mapY = 20;
+const int tileSize = 32;
+
+sf::RenderWindow App(sf::VideoMode(mapX*tileSize, mapY*tileSize), "Editor");
+Map map(mapX, mapY, tileSize);
 bool dispBorders=true;
 
 void ask()

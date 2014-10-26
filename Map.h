@@ -21,6 +21,7 @@ public:
 	int getTiles();
 	std::string export();
 	void import(std::string content);
+	void clear();
 private:
 	std::vector<std::vector<int>> _map;
 	int sizeX;

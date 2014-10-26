@@ -4,15 +4,16 @@
 #include <SFML\Graphics.hpp>
 #include <iostream>
 #include <fstream>
+#include "dirent.h"
 #include "Map.h"
 
 class Commands
 {
 public:
 	Commands();
-	~Commands();
 	void execute(std::string command);
 	void drawHelp();
+	void getFiles();
 };
 
 #endif
