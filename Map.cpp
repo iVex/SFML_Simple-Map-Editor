@@ -152,11 +152,7 @@ void Map::import(std::string content)
 		for (int n = 0; n < _map[i].size(); n++)
 		{
 			std::getline(ss, word, ',');
-<<<<<<< HEAD
 			_map[i][n] = std::stoi(word); // no "std::" on linux
-=======
-			_map[i][n] = std::stoi(word);
->>>>>>> origin/master
 		}
 	}
 }
