@@ -11,26 +11,26 @@ Working on linux: <br/>
 
 ## Usage on linux:
 In Commands.h, change:
-"""
+'''
 #include "dirent.h"
-"""
+'''
 by:
-"""
+'''
 #include <dirent.h>
-"""
+'''
 <br/>
 Then in Map.cpp, change:
-"""
+'''
 _map[i][n] = std::stoi(word);
-"""
+'''
 by:
-"""
+'''
 _map[i][n] = std::stoi(word);
-"""
+'''
 (Or add using namespace std; on top of the file)
 <br/>
 Compile and run using:
-"""
+'''
 g++ -std=c++0x *.cpp -o sfml-editor -lsfml-graphics -lsfml-window -lsfml-system
 ./sfml-editor
-"""
+'''
