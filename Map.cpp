@@ -128,7 +128,7 @@ std::string Map::exportM()
 	{
 		for (int n = 0; n < _map[i].size(); n++)
 		{
-			exported += std::to_string(_map[i][n]) + ",";
+			exported += std::to_string(_map[i][n]) + ","; // Linux users: have to use -std=c++0x
 		}
 		exported += "\n";
 	}
@@ -152,8 +152,7 @@ void Map::import(std::string content)
 		for (int n = 0; n < _map[i].size(); n++)
 		{
 			std::getline(ss, word, ',');
-			_map[i][n] = std::stoi(word);
-			std::cout << "[" << i << "][" << n << "]: " << std::stoi(word) << std::endl;
+			_map[i][n] = std::stoi(word); // no "std::" on linux
 		}
 	}
 }

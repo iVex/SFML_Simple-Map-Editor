@@ -1,7 +1,7 @@
 #ifndef MAP_H
 #define MAP_H
 
-#include <SFML\Graphics.hpp>
+#include <SFML/Graphics.hpp>
 #include <iostream>
 #include <map>
 #include <vector>
@@ -28,8 +28,8 @@ private:
 	int sizeX;
 	int sizeY;
 	int tileSize;
-	std::vector<std::vector<sf::RectangleShape>> barsV;
-	std::vector<std::vector<sf::RectangleShape>> barsH;
+	std::vector< std::vector< sf::RectangleShape > > barsV;
+	std::vector< std::vector< sf::RectangleShape > > barsH;
 	Tile tileset;
 };
 

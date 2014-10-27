@@ -1,7 +1,7 @@
 #ifndef TILE_H
 #define TILE_H
 
-#include <SFML\Graphics.hpp>
+#include <SFML/Graphics.hpp>
 #include <iostream>
 #include <vector>
 #include <algorithm>
@@ -20,8 +20,8 @@ public:
 private:
 	sf::Texture textureTile;
 	int sizeTile;
-	std::vector<std::vector<int>> tiles;
-	std::vector<std::vector<sf::Sprite>> tileS;
+	std::vector< std::vector< int > > tiles;
+	std::vector< std::vector< sf::Sprite > > tileS;
 	int maxTiles;
 };
 
