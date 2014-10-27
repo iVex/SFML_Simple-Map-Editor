@@ -11,7 +11,7 @@ const int tileSize = 32;
 
 // Window and map Creation
 sf::RenderWindow App(sf::VideoMode(mapX*tileSize, mapY*tileSize), "Editor");
-Map map(mapX, mapY, tileSize);
+Map map(mapX, mapY, tileSize, "assets/tilesss.png");
 bool dispBorders=true;
 
 // Thread executing commands (commands.h & commands.cpp) 

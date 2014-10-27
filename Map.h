@@ -13,9 +13,9 @@ class Map
 {
 public:
 	Map();
-	Map(int x, int y, int size);
+	Map(int x, int y, int size, std::string tilesetFile);
 	~Map();
-	void createMap(int x, int y, int size);
+	void createMap(int x, int y, int size, std::string tilesetFile);
 	void drawBorder();
 	void drawMap();
 	void changeTile(int posWheel);

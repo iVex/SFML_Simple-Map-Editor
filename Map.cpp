@@ -6,19 +6,19 @@ Map::Map()
 {
 }
 
-Map::Map(int x, int y, int size)
+Map::Map(int x, int y, int size, std::string tilesetFile)
 {
-	this->createMap(x, y, size);
+	this->createMap(x, y, size, tilesetFile);
 }
 
 Map::~Map()
 {
 }
 
-void Map::createMap(int x, int y, int size)
+void Map::createMap(int x, int y, int size, std::string tilesetFile)
 {
 	// Open the tileset
-	tileset.setTileset("assets/tilesss.png", size);
+	tileset.setTileset(tilesetFile, size);
 	sizeX = x;
 	sizeY = y;
 	tileSize = size;
