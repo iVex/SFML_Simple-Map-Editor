@@ -19,7 +19,7 @@ Then in Map.cpp, change:
 ` _map[i][n] = std::stoi(word); `
 by:
 ` _map[i][n] = std::stoi(word); `
-(Or add using namespace std; on top of the file)
+(Or add `using namespace std;` on top of the file)
 <br/>
 Compile and run using:
 ```
