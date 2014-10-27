@@ -153,7 +153,6 @@ void Map::import(std::string content)
 		{
 			std::getline(ss, word, ',');
 			_map[i][n] = std::stoi(word);
-			std::cout << "[" << i << "][" << n << "]: " << std::stoi(word) << std::endl;
 		}
 	}
 }
