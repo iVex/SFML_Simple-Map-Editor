@@ -13,8 +13,8 @@ void Commands::execute(std::string command)
 {
 	if (command == "exit") // Exit the App, and the thread
 	{
-		App.close();
 		std::exit(0);
+		App.close();
 	}
 	else if (command == "save" || command == "export") // Save the map on a .txt file, in the map/ folder
 	{
@@ -39,15 +39,23 @@ void Commands::execute(std::string command)
 		std::ifstream file(filename);
 		if (file)
 		{
-			std::string line;
+			std::string line, sizes;
 			std::string content;
-			int lines=0;
+			int size[2];
+
+			std::getline(file, sizes);
+			std::stringstream ss(sizes);
+			for (int i = 0; std::getline(ss, sizes, ','); i++)
+			{
+				size[i] = stoi(sizes);
+			}
+			
 			while (std::getline(file, line))
 			{
 				content += line;
 			}
 
-			map.import(content);
+			map.import(content, size);
 		}
 	}
 	else if (command == "border") // Enable or Disable the borders on the map (change the dispBorders value in main.cpp)

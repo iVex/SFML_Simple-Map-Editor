@@ -21,7 +21,7 @@ public:
 	void changeTile(int posWheel);
 	int getTiles();
 	std::string exportM();
-	void import(std::string content);
+	void import(std::string content, int size[2]);
 	void clear();
 private:
 	std::vector<std::vector<int>> _map;

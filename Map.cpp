@@ -1,6 +1,10 @@
 #include "Map.h"
 
 extern sf::RenderWindow App;
+extern int mapX;
+extern int mapY;
+
+using namespace std;
 
 Map::Map()
 {
@@ -124,6 +128,7 @@ void Map::changeTile(int posWheel)
 std::string Map::exportM()
 {
 	std::string exported;
+	exported += std::to_string(sizeX) + "," + std::to_string(sizeY)+"\n";
 	for (int i = 0; i < _map.size(); i++)
 	{
 		for (int n = 0; n < _map[i].size(); n++)
@@ -142,19 +147,26 @@ std::string Map::exportM()
 		...
 	and set the values in the _map vector.
 */
-void Map::import(std::string content)
+void Map::import(std::string content, int size[2])
 {
 	std::stringstream ss(content);
 	std::string word;
-	int n = 0;
-	for (int i = 0; i < _map.size(); i++)
+	if (size[0]==sizeX && size[1]==sizeY)
 	{
-		for (int n = 0; n < _map[i].size(); n++)
+		for (int i = 0; i < _map.size(); i++)
 		{
-			std::getline(ss, word, ',');
-			_map[i][n] = std::stoi(word); // no "std::" on linux
+			for (int n = 0; n < _map[i].size(); n++)
+			{
+				std::getline(ss, word, ',');
+				_map[i][n] = stoi(word);
+			}
 		}
 	}
+	else
+	{
+		std::cout << "Wrong size. Need: " << size[0] << "x" << size[1] << std::endl;
+	}
+	
 }
 
 // Destroy every items (with a confirmation in the commands class)

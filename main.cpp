@@ -5,8 +5,8 @@
 #include "Map.h"
 #include "Commands.h"
 
-const int mapX = 20;
-const int mapY = 20;
+int mapX = 20;
+int mapY = 20;
 const int tileSize = 32;
 
 // Window and map Creation
