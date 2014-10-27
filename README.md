@@ -23,6 +23,6 @@ by:
 <br/><br/>
 Compile and run using:
 ```
-g++ -std=c++0x *.cpp -o sfml-editor -lsfml-graphics -lsfml-window -lsfml-system
-./sfml-editor
+$: g++ -std=c++0x *.cpp -o sfml-editor -lsfml-graphics -lsfml-window -lsfml-system
+$: ./sfml-editor
 ```
