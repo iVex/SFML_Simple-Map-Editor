@@ -8,6 +8,7 @@
 #include <sstream>
 #include "Tile.h"
 
+// Create the map, using the Tile class to Draw tiles on screen
 class Map
 {
 public:
@@ -19,7 +20,7 @@ public:
 	void drawMap();
 	void changeTile(int posWheel);
 	int getTiles();
-	std::string export();
+	std::string exportM();
 	void import(std::string content);
 	void clear();
 private:

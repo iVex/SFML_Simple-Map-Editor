@@ -5,6 +5,7 @@
 #include <iostream>
 #include <fstream>
 
+// Class sprite, easier way to load and manage a sprite. Unused at the moment.
 class Sprite
 {
 public:

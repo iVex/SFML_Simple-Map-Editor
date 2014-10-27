@@ -1,18 +1,20 @@
 #include <SFML/Graphics.hpp>
 #include <SFML/System.hpp>
-#include "Sprite.h"
+//#include "Sprite.h"
 #include "Player.h"
 #include "Map.h"
 #include "Commands.h"
 
-const int mapX = 25;
+const int mapX = 20;
 const int mapY = 20;
 const int tileSize = 32;
 
+// Window and map Creation
 sf::RenderWindow App(sf::VideoMode(mapX*tileSize, mapY*tileSize), "Editor");
 Map map(mapX, mapY, tileSize);
 bool dispBorders=true;
 
+// Thread executing commands (commands.h & commands.cpp) 
 void ask()
 {
 	Commands commands;
@@ -27,13 +29,17 @@ void ask()
 
 int main(int argc, char *argv[])
 {
+	// posWheel -> item selected on the mouse scroll wheel
 	int posWheel = 2;
 
+	// Launching the thread
 	sf::Thread thread(&ask);
 	thread.launch();
 
+	// Main loop (SFML App)
 	while (App.isOpen())
 	{
+		// Event "manager"
 		sf::Event event;
 		while (App.pollEvent(event))
 		{
@@ -56,13 +62,15 @@ int main(int argc, char *argv[])
 			}
 		}
 
+		// Background color
 		App.clear(sf::Color(0, 170, 170, 255));
-
+		// Drawing the map, the item selected, and the borders (if dispBorders==true)
 		map.drawMap();
 		map.changeTile(posWheel);
 		if (dispBorders)
 			map.drawBorder();
 
+		// Displays the things
 		App.display();
 	}
 

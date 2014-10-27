@@ -15,6 +15,7 @@ Sprite::~Sprite()
 {
 }
 
+// Load the texture, the settings (in a std::map)
 void Sprite::setTexture(std::string filename, std::map<std::string, int> settings)
 {
 	if (!texture.loadFromFile(filename))

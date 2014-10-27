@@ -4,9 +4,10 @@
 #include <SFML\Graphics.hpp>
 #include <iostream>
 #include <fstream>
-#include "dirent.h"
+#include "dirent.h" // Got on the internet, for linux user, use <dirent.h>
 #include "Map.h"
 
+// Allow the secondary thread to run commands, to interact with the main thread.
 class Commands
 {
 public:

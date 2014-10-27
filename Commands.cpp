@@ -11,12 +11,12 @@ Commands::Commands()
 
 void Commands::execute(std::string command)
 {
-	if (command == "exit")
+	if (command == "exit") // Exit the App, and the thread
 	{
 		App.close();
 		std::exit(0);
 	}
-	else if (command == "save" || command == "export")
+	else if (command == "save" || command == "export") // Save the map on a .txt file, in the map/ folder
 	{
 		//std::cout << map.export() << std::endl;
 		std::string filename;
@@ -26,10 +26,10 @@ void Commands::execute(std::string command)
 		std::ofstream file(filename, std::ios::trunc);
 		if (file)
 		{
-			file << map.export() << std::endl;
+			file << map.exportM() << std::endl;
 		}
 	}
-	else if (command == "open")
+	else if (command == "open") // Open a map on a .txt file, in the map/ folder
 	{
 		this->getFiles();
 		std::string filename;
@@ -41,6 +41,7 @@ void Commands::execute(std::string command)
 		{
 			std::string line;
 			std::string content;
+			int lines=0;
 			while (std::getline(file, line))
 			{
 				content += line;
@@ -49,7 +50,7 @@ void Commands::execute(std::string command)
 			map.import(content);
 		}
 	}
-	else if (command == "border")
+	else if (command == "border") // Enable or Disable the borders on the map (change the dispBorders value in main.cpp)
 	{
 		if (dispBorders)
 		{
@@ -62,7 +63,7 @@ void Commands::execute(std::string command)
 			std::cout << "Enabled." << std::endl;
 		}
 	}
-	else if (command == "clear")
+	else if (command == "clear") // Clear the map (with confirmation)
 	{
 		std::string answer;
 		std::cout << "Sure (y/n): ";
@@ -72,17 +73,18 @@ void Commands::execute(std::string command)
 			map.clear();
 		}
 	}
-	else if (command == "help")
+	else if (command == "help") // Draw the Help
 	{
 		this->drawHelp();
 	}
-	else
+	else // If any of the previous commands isn't executed, draw this and the help
 	{
-		std::cout << "Unknown command... dumbass...\n" << std::endl;
+		std::cout << "Unknown command...\n" << std::endl;
 		this->drawHelp();
 	}
 }
 
+// Draw the Help, at object declaration, and when the command "help" is called
 void Commands::drawHelp()
 {
 	std::cout << "Help:\n	No arguments needed\n	save/export : Save the map in the map folder.\n	open : Open a map in the map folder." << std::endl;
@@ -92,8 +94,10 @@ void Commands::drawHelp()
 	std::cout << std::endl;
 }
 
+// Display all the files in "gamepath/map/"
 void Commands::getFiles()
 {
+	// dirent.h is used in this function and works fine
 	DIR *dir;
 	struct dirent *ent;
 	if ((dir = opendir("map/")) != NULL) {

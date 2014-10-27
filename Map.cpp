@@ -17,14 +17,18 @@ Map::~Map()
 
 void Map::createMap(int x, int y, int size)
 {
-	tileset.setTileset("assets/tileset.png", size);
+	// Open the tileset
+	tileset.setTileset("assets/tilesss.png", size);
 	sizeX = x;
 	sizeY = y;
 	tileSize = size;
+
+	// Resizing the _map vector to the size of the Map
 	_map.resize(sizeY);
 	for (int n = 0; n < _map.size(); n++)
 		_map[n].resize(sizeX);
 
+	// Setting every case to be empty (item: 0)
 	for (int i = 0; i < sizeY; i++)
 	{
 		for (int n = 0; n < sizeX; n++)
@@ -33,6 +37,7 @@ void Map::createMap(int x, int y, int size)
 		}
 	}
 
+	// Creating the borders vectors
 	barsV.resize(sizeY);
 	for (int w = 0; w < barsV.size(); w++)
 		barsV[w].resize(sizeX);
@@ -41,6 +46,7 @@ void Map::createMap(int x, int y, int size)
 	for (int w = 0; w < barsV.size(); w++)
 		barsH[w].resize(sizeX);
 
+	// Graphic settings for the bars.
 	for (int i = 0; i < sizeY; i++)
 	{
 		for (int n = 0; n < sizeX; n++)
@@ -55,6 +61,7 @@ void Map::createMap(int x, int y, int size)
 	}
 }
 
+// This will only draw borders
 void Map::drawBorder()
 {
 	for (int i = 0; i < barsV.size(); i++)
@@ -73,6 +80,7 @@ void Map::drawBorder()
 	}
 }
 
+// This will only draw the items installed
 void Map::drawMap()
 {
 	for (int i = 0; i < _map.size(); i++)
@@ -87,11 +95,13 @@ void Map::drawMap()
 	}
 }
 
+// Get the number of tiles (Used in main.cpp for the wheel selection of the item)
 int Map::getTiles()
 {
 	return tileset.getNb()-1;
 }
 
+// Update the _map vector with the item selected (used in main.cpp)
 void Map::changeTile(int posWheel)
 {
 	tileset.DrawMouse(posWheel);
@@ -105,7 +115,13 @@ void Map::changeTile(int posWheel)
 	}
 }
 
-std::string Map::export()
+/*
+	Return a string as:
+		_map[0][0], _map[0][1], ... \n
+		_map[1][0], _map[1][1], ... \n
+		...
+*/
+std::string Map::exportM()
 {
 	std::string exported;
 	for (int i = 0; i < _map.size(); i++)
@@ -119,11 +135,18 @@ std::string Map::export()
 	return exported;
 }
 
+/*
+	Read a string as:
+		_map[0][0], _map[0][1], ... \n
+		_map[1][0], _map[1][1], ... \n
+		...
+	and set the values in the _map vector.
+*/
 void Map::import(std::string content)
 {
 	std::stringstream ss(content);
 	std::string word;
-	int i = 0;
+	int n = 0;
 	for (int i = 0; i < _map.size(); i++)
 	{
 		for (int n = 0; n < _map[i].size(); n++)
@@ -135,6 +158,7 @@ void Map::import(std::string content)
 	}
 }
 
+// Destroy every items (with a confirmation in the commands class)
 void Map::clear()
 {
 	for (int i = 0; i < _map.size(); i++)

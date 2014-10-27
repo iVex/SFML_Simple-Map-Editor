@@ -6,13 +6,14 @@
 #include <vector>
 #include <algorithm>
 
+// Load the tileset, add a number to every case
 class Tile
 {
 public:
 	Tile();
-	Tile(std::string tileset, int size = 32);
+	Tile(std::string tileset, int size);
 	~Tile();
-	void setTileset(std::string tileset, int size = 32);
+	void setTileset(std::string tileset, int size);
 	void Draw(int x, int y, int nb);
 	void DrawMouse(int nb);
 	int getNb();
