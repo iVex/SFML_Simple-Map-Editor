@@ -5,13 +5,11 @@
 #include "Map.h"
 #include "Commands.h"
 
-int mapX = 20;
-int mapY = 20;
 const int tileSize = 32;
 
-// Window and map Creation
-sf::RenderWindow App(sf::VideoMode(mapX*tileSize, mapY*tileSize), "Editor");
-Map map(mapX, mapY, tileSize, "assets/tilesss.png");
+// Window and map, globals, to be accessed by other files
+sf::RenderWindow App;
+Map map;
 bool dispBorders=true;
 
 // Thread executing commands (commands.h & commands.cpp) 
@@ -29,6 +27,17 @@ void ask()
 
 int main(int argc, char *argv[])
 {
+	/* Asking for the size */
+	int mapX = 20;
+	int mapY = 20;
+	std::cout << "X: ";
+	std::cin >> mapX;
+	std::cout << "Y: ";
+	std::cin >> mapY;
+
+	App.create(sf::VideoMode(mapX*tileSize, mapY*tileSize), "Editor");
+	map.createMap(mapX, mapY, tileSize, "assets/tilesss.png");
+
 	// posWheel -> item selected on the mouse scroll wheel
 	int posWheel = 2;
 
@@ -47,6 +56,7 @@ int main(int argc, char *argv[])
 			{
 				App.close();
 				thread.terminate();
+				std::exit(0);
 			}
 			if (event.type == sf::Event::MouseWheelMoved)
 			{

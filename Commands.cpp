@@ -85,6 +85,25 @@ void Commands::execute(std::string command)
 	{
 		this->drawHelp();
 	}
+	else if (command == "yeah") // Working on a settings parser
+	{
+		settings settings("settings.txt");
+		std::string key;
+		std::string type;
+
+		std::cout << "Key: ";
+		std::cin >> key;
+		std::cout << "Type: ";
+		std::cin >> type;
+		if (type=="string")
+		{
+			std::cout << settings.getValue(key) << std::endl;
+		}
+		else if (type == "int")
+		{
+			std::cout << settings.getValue(key) << std::endl;
+		}
+	}
 	else // If any of the previous commands isn't executed, draw this and the help
 	{
 		std::cout << "Unknown command...\n" << std::endl;

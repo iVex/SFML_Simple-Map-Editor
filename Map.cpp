@@ -1,8 +1,6 @@
 #include "Map.h"
 
 extern sf::RenderWindow App;
-extern int mapX;
-extern int mapY;
 
 using namespace std;
 
@@ -21,6 +19,7 @@ Map::~Map()
 
 void Map::createMap(int x, int y, int size, std::string tilesetFile)
 {
+	tilename = tilesetFile;
 	// Open the tileset
 	tileset.setTileset(tilesetFile, size);
 	sizeX = x;
@@ -29,7 +28,7 @@ void Map::createMap(int x, int y, int size, std::string tilesetFile)
 
 	// Resizing the _map vector to the size of the Map
 	_map.resize(sizeY);
-	for (int n = 0; n < _map.size(); n++)
+	for (size_t n = 0; n < _map.size(); n++)
 		_map[n].resize(sizeX);
 
 	// Setting every case to be empty (item: 0)
@@ -43,11 +42,11 @@ void Map::createMap(int x, int y, int size, std::string tilesetFile)
 
 	// Creating the borders vectors
 	barsV.resize(sizeY);
-	for (int w = 0; w < barsV.size(); w++)
+	for (size_t w = 0; w < barsV.size(); w++)
 		barsV[w].resize(sizeX);
 
 	barsH.resize(sizeY);
-	for (int w = 0; w < barsV.size(); w++)
+	for (size_t w = 0; w < barsV.size(); w++)
 		barsH[w].resize(sizeX);
 
 	// Graphic settings for the bars.
@@ -55,10 +54,10 @@ void Map::createMap(int x, int y, int size, std::string tilesetFile)
 	{
 		for (int n = 0; n < sizeX; n++)
 		{
-			barsV[i][n].setSize(sf::Vector2f(1, tileSize));
+			barsV[i][n].setSize(sf::Vector2f(1.0f, (float)tileSize));
 			barsV[i][n].setPosition((float)n * tileSize, (float)i * tileSize);
 			barsV[i][n].setFillColor(sf::Color::White);
-			barsH[i][n].setSize(sf::Vector2f(tileSize, 1));
+			barsH[i][n].setSize(sf::Vector2f((float)tileSize, 1.0f));
 			barsH[i][n].setPosition((float)n * tileSize, (float)i * tileSize);
 			barsH[i][n].setFillColor(sf::Color::White);
 		}
@@ -68,16 +67,16 @@ void Map::createMap(int x, int y, int size, std::string tilesetFile)
 // This will only draw borders
 void Map::drawBorder()
 {
-	for (int i = 0; i < barsV.size(); i++)
+	for (size_t i = 0; i < barsV.size(); i++)
 	{
-		for (int n = 0; n < barsV[i].size(); n++)
+		for (size_t n = 0; n < barsV[i].size(); n++)
 		{
 			App.draw(barsV[i][n]);
 		}
 	}
-	for (int i = 0; i < barsH.size(); i++)
+	for (size_t i = 0; i < barsH.size(); i++)
 	{
-		for (int n = 0; n < barsH[i].size(); n++)
+		for (size_t n = 0; n < barsH[i].size(); n++)
 		{
 			App.draw(barsH[i][n]);
 		}
@@ -87,9 +86,9 @@ void Map::drawBorder()
 // This will only draw the items installed
 void Map::drawMap()
 {
-	for (int i = 0; i < _map.size(); i++)
+	for (size_t i = 0; i < _map.size(); i++)
 	{
-		for (int n = 0; n < _map[i].size(); n++)
+		for (size_t n = 0; n < _map[i].size(); n++)
 		{
 			if (_map[i][n]!=0)
 			{
@@ -129,9 +128,9 @@ std::string Map::exportM()
 {
 	std::string exported;
 	exported += std::to_string(sizeX) + "," + std::to_string(sizeY)+"\n";
-	for (int i = 0; i < _map.size(); i++)
+	for (size_t i = 0; i < _map.size(); i++)
 	{
-		for (int n = 0; n < _map[i].size(); n++)
+		for (size_t n = 0; n < _map[i].size(); n++)
 		{
 			exported += std::to_string(_map[i][n]) + ","; // Linux users: have to use -std=c++0x
 		}
@@ -153,9 +152,9 @@ void Map::import(std::string content, int size[2])
 	std::string word;
 	if (size[0]==sizeX && size[1]==sizeY)
 	{
-		for (int i = 0; i < _map.size(); i++)
+		for (size_t i = 0; i < _map.size(); i++)
 		{
-			for (int n = 0; n < _map[i].size(); n++)
+			for (size_t n = 0; n < _map[i].size(); n++)
 			{
 				std::getline(ss, word, ',');
 				_map[i][n] = stoi(word);
@@ -172,9 +171,9 @@ void Map::import(std::string content, int size[2])
 // Destroy every items (with a confirmation in the commands class)
 void Map::clear()
 {
-	for (int i = 0; i < _map.size(); i++)
+	for (size_t i = 0; i < _map.size(); i++)
 	{
-		for (int n = 0; n < _map[i].size(); n++)
+		for (size_t n = 0; n < _map[i].size(); n++)
 		{
 			_map[i][n] = 0;
 		}

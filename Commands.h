@@ -7,6 +7,7 @@
 #include <sstream>
 #include "dirent.h" // Got on the internet, for linux user, use <dirent.h>
 #include "Map.h"
+#include "settings.h"
 
 // Allow the secondary thread to run commands, to interact with the main thread.
 class Commands

@@ -31,6 +31,7 @@ private:
 	std::vector< std::vector< sf::RectangleShape > > barsV;
 	std::vector< std::vector< sf::RectangleShape > > barsH;
 	Tile tileset;
+	std::string tilename;
 };
 
 #endif
