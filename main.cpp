@@ -36,8 +36,8 @@ int main(int argc, char *argv[])
 	App.create(sf::VideoMode(20*tileSize, mapY*tileSize), "Editor");
 	map.createMap(mapX, mapY, tileSize, "assets/bricks.png");
 
-	sf::View view(sf::Vector2f((20 * tileSize)/2, (mapY*tileSize)/2), sf::Vector2f(20 * tileSize, mapY * tileSize));
-	float centerX = (20 * tileSize) / 2, centerY = (mapY*tileSize) / 2, zoom = 1;
+	sf::View view(sf::Vector2f((20 * (float)tileSize)/2, (mapY*(float)tileSize)/2), sf::Vector2f(20 * (float)tileSize, mapY * (float)tileSize));
+	float centerX = (20 * (float)tileSize) / 2, centerY = ((float)mapY*(float)tileSize) / 2, zoom = 1;
 
 	// posWheel -> item selected on the mouse scroll wheel
 	int posWheel = 2;
@@ -77,6 +77,9 @@ int main(int argc, char *argv[])
 		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Right) && centerX<2880)
 			centerX += 1;
 
+
+		sf::Vector2f posMouse = App.mapPixelToCoords(sf::Mouse::getPosition(App));
+
 		view.setCenter(sf::Vector2f(centerX, centerY));
 		// Applying the view
 		App.setView(view);
@@ -85,7 +88,7 @@ int main(int argc, char *argv[])
 		App.clear(sf::Color(25, 120, 130));
 		// Drawing the map, the item selected, and the borders (if dispBorders==true)
 		map.drawMap();
-		map.changeTile(posWheel);
+		map.changeTile(posWheel, posMouse);
 		if (dispBorders)
 			map.drawBorder();
 

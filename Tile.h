@@ -15,7 +15,7 @@ public:
 	~Tile();
 	void setTileset(std::string tileset, int size);
 	void Draw(int x, int y, int nb);
-	void DrawMouse(int nb);
+	void DrawMouse(int nb, sf::Vector2f posMouse);
 	int getNb();
 private:
 	sf::Texture textureTile;

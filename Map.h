@@ -18,7 +18,7 @@ public:
 	void createMap(int x, int y, int size, std::string tilesetFile);
 	void drawBorder();
 	void drawMap();
-	void changeTile(int posWheel);
+	void changeTile(int posWheel, sf::Vector2f posMouse);
 	int getTiles();
 	std::string exportM();
 	void import(std::string content, int size[2]);

@@ -5,6 +5,8 @@
 #include <iostream>
 #include <fstream>
 #include <sstream>
+#include <string>
+#include <direct.h>
 #include "dirent.h" // Got on the internet, for linux user, use <dirent.h>
 #include "Map.h"
 #include "settings.h"

@@ -22,7 +22,8 @@ void Commands::execute(std::string command)
 		std::string filename;
 		std::cout << "Name of the file (no extension): ";
 		std::cin >> filename;
-		filename = "map/" + filename + ".txt";
+		_mkdir(("map/" + filename).c_str());
+		filename = "map/" + filename + "/" + "level.txt";
 		std::ofstream file(filename, std::ios::trunc);
 		if (file)
 		{
@@ -35,7 +36,7 @@ void Commands::execute(std::string command)
 		std::string filename;
 		std::cout << "Name of the file (no extension): ";
 		std::cin >> filename;
-		filename = "map/" + filename + ".txt";
+		filename = "map/" + filename + "/" + "level.txt";
 		std::ifstream file(filename);
 		if (file)
 		{

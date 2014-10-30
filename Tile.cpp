@@ -78,7 +78,7 @@ void Tile::Draw(int x, int y, int nb)
 }
 
 // Same as this->Draw(), unless this time, it draws it on the mouse pointer, with the sprite origin = (tile size / 2, tile size / 2)
-void Tile::DrawMouse(int nb)
+void Tile::DrawMouse(int nb, sf::Vector2f posMouse)
 {
 	sf::Sprite temp;
 	temp.setTexture(textureTile);
@@ -95,7 +95,7 @@ void Tile::DrawMouse(int nb)
 			tRect.width = sizeTile;	tRect.height = sizeTile;
 			temp.setTextureRect(tRect);
 			temp.setOrigin(sizeTile / 2, sizeTile / 2);
-			temp.setPosition(sf::Mouse::getPosition(App).x, sf::Mouse::getPosition(App).y);
+			temp.setPosition(posMouse.x, posMouse.y);
 			App.draw(temp);
 			break;
 		}

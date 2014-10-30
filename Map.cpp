@@ -107,16 +107,16 @@ int Map::getTiles()
 }
 
 // Update the _map vector with the item selected (used in main.cpp)
-void Map::changeTile(int posWheel)
+void Map::changeTile(int posWheel, sf::Vector2f posMouse)
 {
-	tileset.DrawMouse(posWheel);
-	if (sf::Mouse::isButtonPressed(sf::Mouse::Left) && sf::Mouse::getPosition(App).x <= tileSize*sizeX && (sf::Mouse::getPosition(App).y <= tileSize*sizeY) && sf::Mouse::getPosition(App).x >= 0 && sf::Mouse::getPosition(App).y >= 0)
+	tileset.DrawMouse(posWheel, posMouse);
+	if (sf::Mouse::isButtonPressed(sf::Mouse::Left) && posMouse.x <= tileSize*sizeX && (posMouse.y <= tileSize*sizeY) && posMouse.x >= 0 && posMouse.y >= 0)
 	{
-		_map[(int)sf::Mouse::getPosition(App).y / tileSize][(int)sf::Mouse::getPosition(App).x / tileSize] = posWheel;
+		_map[(int)posMouse.y / tileSize][(int)posMouse.x / tileSize] = posWheel;
 	}
-	if (sf::Mouse::isButtonPressed(sf::Mouse::Right) && sf::Mouse::getPosition(App).x <= tileSize*sizeX && (sf::Mouse::getPosition(App).y <= tileSize*sizeY) && sf::Mouse::getPosition(App).x >= 0 && sf::Mouse::getPosition(App).y >= 0)
+	if (sf::Mouse::isButtonPressed(sf::Mouse::Right) && posMouse.x <= tileSize*sizeX && (posMouse.y <= tileSize*sizeY) && posMouse.x >= 0 && posMouse.y >= 0)
 	{
-		_map[(int)sf::Mouse::getPosition(App).y / tileSize][(int)sf::Mouse::getPosition(App).x / tileSize] = (-1);
+		_map[(int)posMouse.y / tileSize][(int)posMouse.x / tileSize] = (-1);
 	}
 }
 
