@@ -40,4 +40,8 @@ std::string settings::getValue(std::string key)
 
 		return table[1];
 	}
+	else
+	{
+		return 0;
+	}
 }

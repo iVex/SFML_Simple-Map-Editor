@@ -10,7 +10,7 @@ const int tileSize = 32;
 // Window and map, globals, to be accessed by other files
 sf::RenderWindow App;
 Map map;
-bool dispBorders=true;
+bool dispBorders=false;
 
 // Thread executing commands (commands.h & commands.cpp) 
 void ask()
@@ -28,15 +28,16 @@ void ask()
 int main(int argc, char *argv[])
 {
 	/* Asking for the size */
-	int mapX = 20;
+	int mapX = 100;
 	int mapY = 20;
-	std::cout << "X: ";
-	std::cin >> mapX;
-	std::cout << "Y: ";
+	std::cout << "height: ";
 	std::cin >> mapY;
 
-	App.create(sf::VideoMode(mapX*tileSize, mapY*tileSize), "Editor");
-	map.createMap(mapX, mapY, tileSize, "assets/tilesss.png");
+	App.create(sf::VideoMode(20*tileSize, mapY*tileSize), "Editor");
+	map.createMap(mapX, mapY, tileSize, "assets/bricks.png");
+
+	sf::View view(sf::Vector2f((20 * tileSize)/2, (mapY*tileSize)/2), sf::Vector2f(20 * tileSize, mapY * tileSize));
+	float centerX = (20 * tileSize) / 2, centerY = (mapY*tileSize) / 2, zoom = 1;
 
 	// posWheel -> item selected on the mouse scroll wheel
 	int posWheel = 2;
@@ -60,20 +61,28 @@ int main(int argc, char *argv[])
 			}
 			if (event.type == sf::Event::MouseWheelMoved)
 			{
-				posWheel += (int)event.mouseWheel.delta;
+				posWheel -= (int)event.mouseWheel.delta;
 				if (posWheel>map.getTiles())
 				{
-					posWheel = 1;
+					posWheel = 0;
 				}
-				else if (posWheel < 1)
+				else if (posWheel < 0)
 				{
 					posWheel = map.getTiles();
 				}
 			}
 		}
+		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left) && centerX>320)
+			centerX -= 1;
+		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Right) && centerX<2880)
+			centerX += 1;
+
+		view.setCenter(sf::Vector2f(centerX, centerY));
+		// Applying the view
+		App.setView(view);
 
 		// Background color
-		App.clear(sf::Color(0, 170, 170, 255));
+		App.clear(sf::Color(25, 120, 130));
 		// Drawing the map, the item selected, and the borders (if dispBorders==true)
 		map.drawMap();
 		map.changeTile(posWheel);

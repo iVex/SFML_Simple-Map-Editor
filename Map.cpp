@@ -36,9 +36,11 @@ void Map::createMap(int x, int y, int size, std::string tilesetFile)
 	{
 		for (int n = 0; n < sizeX; n++)
 		{
-			_map[i][n] = 0;
+			_map[i][n] = (-1);
 		}
 	}
+
+	_map[0][99] = 1;
 
 	// Creating the borders vectors
 	barsV.resize(sizeY);
@@ -90,7 +92,7 @@ void Map::drawMap()
 	{
 		for (size_t n = 0; n < _map[i].size(); n++)
 		{
-			if (_map[i][n]!=0)
+			if (_map[i][n]!=(-1))
 			{
 				tileset.Draw(n, i, _map[i][n]);
 			}
@@ -114,7 +116,7 @@ void Map::changeTile(int posWheel)
 	}
 	if (sf::Mouse::isButtonPressed(sf::Mouse::Right) && sf::Mouse::getPosition(App).x <= tileSize*sizeX && (sf::Mouse::getPosition(App).y <= tileSize*sizeY) && sf::Mouse::getPosition(App).x >= 0 && sf::Mouse::getPosition(App).y >= 0)
 	{
-		_map[(int)sf::Mouse::getPosition(App).y / tileSize][(int)sf::Mouse::getPosition(App).x / tileSize] = 0;
+		_map[(int)sf::Mouse::getPosition(App).y / tileSize][(int)sf::Mouse::getPosition(App).x / tileSize] = (-1);
 	}
 }
 
@@ -161,9 +163,21 @@ void Map::import(std::string content, int size[2])
 			}
 		}
 	}
+	else if (size[1]<=sizeY)
+	{
+		for (int i = 0; i < size[1]; i++)
+		{
+			for (int n = 0; n < size[0]; n++)
+			{
+				std::getline(ss, word, ',');
+				_map[i][n] = stoi(word);
+			}
+		}
+	}
 	else
 	{
 		std::cout << "Wrong size. Need: " << size[0] << "x" << size[1] << std::endl;
+
 	}
 	
 }
@@ -175,7 +189,7 @@ void Map::clear()
 	{
 		for (size_t n = 0; n < _map[i].size(); n++)
 		{
-			_map[i][n] = 0;
+			_map[i][n] = (-1);
 		}
 	}
 }
