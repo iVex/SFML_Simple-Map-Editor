@@ -22,7 +22,6 @@ void Commands::execute(std::string command)
 		std::string filename;
 		std::cout << "Name of the file (no extension): ";
 		std::cin >> filename;
-		_mkdir(("map/" + filename).c_str());
 		#if defined _MSC_VER
 			_mkdir(("map/" + filename).c_str());
 		#elif defined __GNUC__
