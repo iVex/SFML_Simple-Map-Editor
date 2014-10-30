@@ -2,13 +2,14 @@
 #define COMMANDS_H
 
 #if defined _MSC_VER
-#include <direct.h>
-#include "dirent.h" 
+	#include <direct.h>
+	#include "dirent.h" 
 #elif defined __GNUC__
-#include <sys/types.h>
-#include <sys/stat.h>
-#include <dirent.h>
+	#include <sys/types.h>
+	#include <sys/stat.h>
+	#include <dirent.h>
 #endif
+
 #include <SFML/Graphics.hpp>
 #include <iostream>
 #include <fstream>

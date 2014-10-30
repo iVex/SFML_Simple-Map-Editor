@@ -23,6 +23,11 @@ void Commands::execute(std::string command)
 		std::cout << "Name of the file (no extension): ";
 		std::cin >> filename;
 		_mkdir(("map/" + filename).c_str());
+		#if defined _MSC_VER
+			_mkdir(("map/" + filename).c_str());
+		#elif defined __GNUC__
+			mkdir(("map/" + filename).c_str(), 0777);
+		#endif
 		filename = "map/" + filename + "/" + "level.txt";
 		std::ofstream file(filename, std::ios::trunc);
 		if (file)
