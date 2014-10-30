@@ -1,13 +1,19 @@
 #ifndef COMMANDS_H
 #define COMMANDS_H
 
+#if defined _MSC_VER
+#include <direct.h>
+#include "dirent.h" 
+#elif defined __GNUC__
+#include <sys/types.h>
+#include <sys/stat.h>
+#include <dirent.h>
+#endif
 #include <SFML/Graphics.hpp>
 #include <iostream>
 #include <fstream>
 #include <sstream>
 #include <string>
-#include <direct.h>
-#include "dirent.h" // Got on the internet, for linux user, use <dirent.h>
 #include "Map.h"
 #include "settings.h"
 
