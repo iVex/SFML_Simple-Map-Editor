@@ -13,18 +13,18 @@ class Map
 {
 public:
 	Map();
-	Map(int x, int y, int size, std::string tilesetFile);
+	Map(int x, int y, int size, std::string tilesetFile, int nbPlans);
 	~Map();
-	void createMap(int x, int y, int size, std::string tilesetFile);
+	void createMap(int x, int y, int size, std::string tilesetFile, int nbPlans);
 	void drawBorder();
 	void drawMap();
-	void changeTile(int posWheel, sf::Vector2f posMouse);
+	void changeTile(int posWheel, sf::Vector2f posMouse, int plan);
 	int getTiles();
 	std::string exportM();
 	void import(std::string content, int size[2]);
 	void clear();
 private:
-	std::vector<std::vector<int>> _map;
+	std::vector< std::vector< std::vector< int > > > _map;
 	int sizeX;
 	int sizeY;
 	int tileSize;
@@ -32,6 +32,7 @@ private:
 	std::vector< std::vector< sf::RectangleShape > > barsH;
 	Tile tileset;
 	std::string tilename;
+	int plansNb;
 };
 
 #endif

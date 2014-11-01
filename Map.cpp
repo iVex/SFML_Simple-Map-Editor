@@ -8,16 +8,16 @@ Map::Map()
 {
 }
 
-Map::Map(int x, int y, int size, std::string tilesetFile)
+Map::Map(int x, int y, int size, std::string tilesetFile, int nbPlans)
 {
-	this->createMap(x, y, size, tilesetFile);
+	this->createMap(x, y, size, tilesetFile, nbPlans);
 }
 
 Map::~Map()
 {
 }
 
-void Map::createMap(int x, int y, int size, std::string tilesetFile)
+void Map::createMap(int x, int y, int size, std::string tilesetFile, int nbPlans)
 {
 	tilename = tilesetFile;
 	// Open the tileset
@@ -25,22 +25,32 @@ void Map::createMap(int x, int y, int size, std::string tilesetFile)
 	sizeX = x;
 	sizeY = y;
 	tileSize = size;
+	plansNb = nbPlans;
 
 	// Resizing the _map vector to the size of the Map
-	_map.resize(sizeY);
+	_map.resize(plansNb);
 	for (size_t n = 0; n < _map.size(); n++)
-		_map[n].resize(sizeX);
-
-	// Setting every case to be empty (item: 0)
-	for (int i = 0; i < sizeY; i++)
 	{
-		for (int n = 0; n < sizeX; n++)
+		_map[n].resize(sizeY);
+		for (size_t i = 0; i < _map[n].size(); i++)
 		{
-			_map[i][n] = (-1);
+			_map[n][i].resize(sizeX);
 		}
 	}
-
-	_map[0][99] = 1;
+	
+	// Setting every case to be empty (item: 0)
+	for (int z = 0; z < plansNb; z++)
+	{
+		for (int i = 0; i < sizeY; i++)
+		{
+			for (int n = 0; n < sizeX; n++)
+			{
+				_map[z][i][n] = (-1);
+			}
+		}
+	}
+	
+	_map[0][0][sizeX-1] = 1;
 
 	// Creating the borders vectors
 	barsV.resize(sizeY);
@@ -88,13 +98,16 @@ void Map::drawBorder()
 // This will only draw the items installed
 void Map::drawMap()
 {
-	for (size_t i = 0; i < _map.size(); i++)
+	for (int z = 0; z < plansNb; z++)
 	{
-		for (size_t n = 0; n < _map[i].size(); n++)
+		for (size_t i = 0; i < _map[z].size(); i++)
 		{
-			if (_map[i][n]!=(-1))
+			for (size_t n = 0; n < _map[z][i].size(); n++)
 			{
-				tileset.Draw(n, i, _map[i][n]);
+				if (_map[z][i][n] != (-1))
+				{
+					tileset.Draw(n, i, _map[z][i][n]);
+				}
 			}
 		}
 	}
@@ -107,16 +120,16 @@ int Map::getTiles()
 }
 
 // Update the _map vector with the item selected (used in main.cpp)
-void Map::changeTile(int posWheel, sf::Vector2f posMouse)
+void Map::changeTile(int posWheel, sf::Vector2f posMouse, int plan)
 {
 	tileset.DrawMouse(posWheel, posMouse);
 	if (sf::Mouse::isButtonPressed(sf::Mouse::Left) && posMouse.x <= tileSize*sizeX && (posMouse.y <= tileSize*sizeY) && posMouse.x >= 0 && posMouse.y >= 0)
 	{
-		_map[(int)posMouse.y / tileSize][(int)posMouse.x / tileSize] = posWheel;
+		_map[plan][(int)posMouse.y / tileSize][(int)posMouse.x / tileSize] = posWheel;
 	}
 	if (sf::Mouse::isButtonPressed(sf::Mouse::Right) && posMouse.x <= tileSize*sizeX && (posMouse.y <= tileSize*sizeY) && posMouse.x >= 0 && posMouse.y >= 0)
 	{
-		_map[(int)posMouse.y / tileSize][(int)posMouse.x / tileSize] = (-1);
+		_map[plan][(int)posMouse.y / tileSize][(int)posMouse.x / tileSize] = (-1);
 	}
 }
 
@@ -129,15 +142,19 @@ void Map::changeTile(int posWheel, sf::Vector2f posMouse)
 std::string Map::exportM()
 {
 	std::string exported;
-	exported += std::to_string(sizeX) + "," + std::to_string(sizeY)+"\n";
-	for (size_t i = 0; i < _map.size(); i++)
+	exported += std::to_string(plansNb) + ", " + std::to_string(sizeX) + "," + std::to_string(sizeY)+"\n";
+	for (int z = 0; z < plansNb; z++)
 	{
-		for (size_t n = 0; n < _map[i].size(); n++)
+		for (size_t i = 0; i < _map[z].size(); i++)
 		{
-			exported += std::to_string(_map[i][n]) + ","; // Linux users: have to use -std=c++0x
+			for (size_t n = 0; n < _map[z][i].size(); n++)
+			{
+				exported += std::to_string(_map[z][i][n]) + ","; // Linux users: have to use -std=c++0x
+			}
+			exported += "\n";
 		}
-		exported += "\n";
 	}
+	
 	return exported;
 }
 
@@ -148,35 +165,49 @@ std::string Map::exportM()
 		...
 	and set the values in the _map vector.
 */
-void Map::import(std::string content, int size[2])
+void Map::import(std::string content, int size[3])
 {
 	std::stringstream ss(content);
 	std::string word;
-	if (size[0]==sizeX && size[1]==sizeY)
+	if (size[0]==plansNb && size[1]==sizeX && size[2]==sizeY)
 	{
-		for (size_t i = 0; i < _map.size(); i++)
+		for (int z = 0; z < plansNb; z++)
 		{
-			for (size_t n = 0; n < _map[i].size(); n++)
+			for (size_t i = 0; i < _map[z].size(); i++)
 			{
-				std::getline(ss, word, ',');
-				_map[i][n] = stoi(word);
+				for (size_t n = 0; n < _map[z][i].size(); n++)
+				{
+					std::getline(ss, word, ',');
+					_map[z][i][n] = stoi(word);
+				}
 			}
-		}
+		}	
 	}
 	else if (size[1]<=sizeY)
 	{
-		for (int i = 0; i < size[1]; i++)
+		for (int i = 0; i < size[2]; i++)
 		{
-			for (int n = 0; n < size[0]; n++)
+			for (int n = 0; n < size[1]; n++)
 			{
 				std::getline(ss, word, ',');
-				_map[i][n] = stoi(word);
+				_map[0][i][n] = stoi(word);
+			}
+		}
+		for (int z = 0; z < plansNb; z++)
+		{
+			for (size_t i = 0; i < _map[z].size(); i++)
+			{
+				for (size_t n = 0; n < _map[z][i].size(); n++)
+				{
+					std::getline(ss, word, ',');
+					_map[z][i][n] = stoi(word);
+				}
 			}
 		}
 	}
 	else
 	{
-		std::cout << "Wrong size. Need: " << size[0] << "x" << size[1] << std::endl;
+		std::cout << "Wrong size. Need: " << size[0] << "x" << size[1] << "x" << size[2] << std::endl;
 
 	}
 	
@@ -185,11 +216,14 @@ void Map::import(std::string content, int size[2])
 // Destroy every items (with a confirmation in the commands class)
 void Map::clear()
 {
-	for (size_t i = 0; i < _map.size(); i++)
+	for (int z = 0; z < plansNb; z++)
 	{
-		for (size_t n = 0; n < _map[i].size(); n++)
+		for (size_t i = 0; i < _map[z].size(); i++)
 		{
-			_map[i][n] = (-1);
+			for (size_t n = 0; n < _map[z][i].size(); n++)
+			{
+				_map[z][i][n] = (-1);
+			}
 		}
 	}
 }

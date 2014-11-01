@@ -46,7 +46,7 @@ void Commands::execute(std::string command)
 		{
 			std::string line, sizes;
 			std::string content;
-			int size[2];
+			int size[3];
 
 			std::getline(file, sizes);
 			std::stringstream ss(sizes);
